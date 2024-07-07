@@ -5,7 +5,7 @@ I just tried to update this, and I also don't have particularly good knowledge a
 Overall, it's working like old times, but I don't know if there's an incompatibility with other mods.
 If the owner wants to remove this, I will remove it.
 	
-&lt;size=20&gt;RuntimeGC In-Game Cleaner&lt;/size&gt;
+# RuntimeGC In-Game Cleaner
 		
 Thanks to user19990313 for creating awesome mod
 
