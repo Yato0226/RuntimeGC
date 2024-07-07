@@ -1,11 +1,9 @@
-# RuntimeGC
-# for 1.5
+# RuntimeGC 1.5
+Warning Please backup your save before using this.</b>
 
-	<b>Warning Please backup your save before using this.</b>
-
-	I just tried to update this, and I also don't have particularly good knowledge about modding.
-	Overall, it's working like old times, but I don't know if there's an incompatibility with other mods.
-	If the owner wants to remove this, I will remove it.
+I just tried to update this, and I also don't have particularly good knowledge about modding.
+Overall, it's working like old times, but I don't know if there's an incompatibility with other mods.
+If the owner wants to remove this, I will remove it.
 	
 &lt;size=20&gt;RuntimeGC In-Game Cleaner&lt;/size&gt;
 		
