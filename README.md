@@ -1,5 +1,5 @@
 # RuntimeGC
-# Fixed version of the 1.5 fork
+# for 1.5
 
 	<b>Warning Please backup your save before using this.</b>
 
