@@ -24,4 +24,4 @@ Original Repository: https://github.com/user19990313/RimWorld-RuntimeGC
 You can find the original mod description on the steam workshop <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=962732083">here</a>.
 
 Latest updates:
-- Updated to 1.5.
+- Updated to 1.6.
