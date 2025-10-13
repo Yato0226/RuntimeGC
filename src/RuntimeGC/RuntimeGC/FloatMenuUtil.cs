@@ -7,16 +7,40 @@ using LudeonTK;
 
 namespace RuntimeGC
 {
+    /// <summary>
+    /// Utility class for managing float menus in RuntimeGC.
+    /// </summary>
     public static class FloatMenuUtil
     {
+        /// <summary>
+        /// Stores groups of float menu item labels.
+        /// </summary>
         private static readonly Dictionary<string, List<string>> groups;
+        /// <summary>
+        /// Indicates if a float menu item is for developer mode only.
+        /// </summary>
         private static readonly Dictionary<string, bool> devOnly;
+        /// <summary>
+        /// Stores actions associated with float menu item labels.
+        /// </summary>
         private static readonly Dictionary<string, Action> items;
 
+        /// <summary>
+        /// Group identifier for general tools.
+        /// </summary>
         public static readonly string GroupTools = "tools";
+        /// <summary>
+        /// Group identifier for fix-related tools.
+        /// </summary>
         public static readonly string GroupFix = "fix";
+        /// <summary>
+        /// Group identifier for quickbar actions.
+        /// </summary>
         public static readonly string GroupQuickbar = "quickbar";
 
+        /// <summary>
+        /// Group identifier for memory monitor update modes.
+        /// </summary>
         public static readonly string GroupMMUpdateMode = "mmupdate";
 
         static FloatMenuUtil()
@@ -78,15 +102,15 @@ namespace RuntimeGC
                 CleanserUtil.RemoveSnow(Find.CurrentMap, true);
                 Message("MsgTextRSH".Translate(), MessageTypeDefOf.PositiveEvent);
             });
-            Add(group, "FloatToolsItems2SnowDev1".Translate(), delegate {
-                CleanserUtil.RemoveSnow(Find.CurrentMap, false);
-                Message("MsgTextRSM".Translate(), MessageTypeDefOf.PositiveEvent);
-            }, true);
-            Add(group, "FloatToolsItems2SnowDev2".Translate(), delegate {
-                foreach (Map m in Find.Maps)
-                    CleanserUtil.RemoveSnow(m, false);
-                Message("MsgTextRSW".Translate(), MessageTypeDefOf.PositiveEvent);
-            }, true);
+            //Add(group, "FloatToolsItems2SnowDev1".Translate(), delegate {
+            //    CleanserUtil.RemoveSnow(Find.CurrentMap, false);
+            //    Message("MsgTextRSM".Translate(), MessageTypeDefOf.PositiveEvent);
+            //}, true);
+            //Add(group, "FloatToolsItems2SnowDev2".Translate(), delegate {
+            //    foreach (Map m in Find.Maps)
+            //        CleanserUtil.RemoveSnow(m, false);
+            //    Message("MsgTextRSW".Translate(), MessageTypeDefOf.PositiveEvent);
+            //}, true);
 
             Add(group, "FloatToolsItems3".Translate(), delegate {
                 Message("MsgTextRCM".Translate(CleanserUtil.RemoveCorpses()), MessageTypeDefOf.NeutralEvent);
@@ -130,6 +154,13 @@ namespace RuntimeGC
                 }, m.ToString().Contains("Debug_"));
         }
 
+        /// <summary>
+        /// Adds a new item to a float menu group.
+        /// </summary>
+        /// <param name="group">The group the item belongs to.</param>
+        /// <param name="label">The label of the float menu item.</param>
+        /// <param name="action">The action to perform when the item is selected.</param>
+        /// <param name="devonly">Whether the item is only visible in developer mode.</param>
         public static void Add(string group,string label,Action action,bool devonly = false)
         {
             if (!groups.ContainsKey(group))
@@ -139,6 +170,10 @@ namespace RuntimeGC
             devOnly.Add(label, devonly);
         }
 
+        /// <summary>
+        /// Generates and displays a float menu for a specific group.
+        /// </summary>
+        /// <param name="group">The identifier of the group to generate the menu for.</param>
         public static void GenerateFloatMenuGroup(string group)
         {
             List<FloatMenuOption> list = new List<FloatMenuOption>();
@@ -150,6 +185,9 @@ namespace RuntimeGC
             Find.WindowStack.Add(new FloatMenu(list));
         }
 
+        /// <summary>
+        /// Generates and displays float menu options related to memory reclamation.
+        /// </summary>
         public static void GenerateMemoryReclaimOptions()
         {
             List<FloatMenuOption> list = new List<FloatMenuOption>();
@@ -178,6 +216,11 @@ namespace RuntimeGC
             Find.WindowStack.Add(new FloatMenu(list));
         }
 
+        /// <summary>
+        /// Displays a message to the user.
+        /// </summary>
+        /// <param name="str">The message string.</param>
+        /// <param name="type">The type of message (e.g., PositiveEvent, NegativeEvent).</param>
         public static void Message(string str,MessageTypeDef type)
         {
             Messages.Message(str,type,RuntimeGC.Settings.ArchiveMessageGeneral);

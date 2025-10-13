@@ -5,16 +5,29 @@ using Verse;
 
 namespace Mute
 {
+    /// <summary>
+    /// Provides methods for detouring game functions to mute specific behaviors.
+    /// </summary>
     public static class Launcher
     {
         #region Replacement
+        /// <summary>
+        /// Replacement method for WorldPawnGCTick to disable its functionality.
+        /// </summary>
         public static void WorldPawnGCTick()
         {
         }
 
+        /// <summary>
+        /// Replacement method for BattleLog.Add to disable adding log entries.
+        /// </summary>
+        /// <param name="entry">The log entry to be added (ignored).</param>
         public static void Add(LogEntry entry)
         {
         }
+        /// <summary>
+        /// Replacement method for BattleLog.ExposeData to prevent battle log serialization.
+        /// </summary>
         public static void ExposeData()
         {
             List<Battle> emptylist = new List<Battle>();
@@ -22,6 +35,11 @@ namespace Mute
         }
         #endregion
 
+        /// <summary>
+        /// Launches the detouring process for WorldPawnGC and BattleLog.
+        /// </summary>
+        /// <param name="doGC">Whether to detour WorldPawnGC.</param>
+        /// <param name="doBL">Whether to detour BattleLog.</param>
         public static void Launch(bool doGC,bool doBL)
         {
             BindingFlags bflag = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public;
@@ -45,6 +63,12 @@ namespace Mute
             }
         }
 
+        /// <summary>
+        /// Performs a method detour (hook) from a source method to a destination method.
+        /// </summary>
+        /// <param name="source">The original method to detour.</param>
+        /// <param name="destination">The new method to redirect to.</param>
+        /// <returns>True if the detour was successful, false otherwise.</returns>
         public unsafe static bool DoDetour(MethodInfo source, MethodInfo destination)
         {
             if (IntPtr.Size == 8)

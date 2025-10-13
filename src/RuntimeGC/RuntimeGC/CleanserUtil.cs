@@ -207,7 +207,7 @@ namespace RuntimeGC
             {
                 if (f.leader == null || f.leader.Dead || f.leader.Destroyed)
                 {
-                    f.GenerateNewLeader();
+                    f.TryGenerateNewLeader();
                     a++;
                 }
             }
@@ -243,6 +243,51 @@ namespace RuntimeGC
             for (int i = list.Count-1; i > -1; i--)
             {
                 c = (Corpse)list[i];
+
+                // New logic to exclude unnatural/anomaly corpses
+                if (RuntimeGC.Settings.ExcludeAnomalyCorpses)
+                {
+                    if (c.InnerPawn != null)
+                    {
+                        // Check if the Anomaly DLC is active at all
+                        if (ModsConfig.AnomalyActive)
+                        {
+                            // Check for specific "Anomaly Entities"
+                            if (c.InnerPawn.RaceProps.IsAnomalyEntity)
+                            {
+                                a--;
+                                continue;
+                            }
+                            // Check for UnnaturalCorpse type directly
+                            if (c is UnnaturalCorpse)
+                            {
+                                a--;
+                                continue;
+                            }
+                            // Check for subhuman pawns (often associated with Anomaly)
+                            if (c.InnerPawn.IsSubhuman)
+                            {
+                                a--;
+                                continue;
+                            }
+                            // Check for specific PawnKindDefs like Revenant
+                            if (c.InnerPawn.kindDef == PawnKindDefOf.Revenant)
+                            {
+                                a--;
+                                continue;
+                            }
+                        }
+
+                        // Keep the mechanoid check as it's a general "unnatural" type
+                        // Removed from here as mechanoids are not exclusive to Anomaly DLC
+                        // if (c.InnerPawn.RaceProps.IsMechanoid)
+                        // {
+                        //     a--;
+                        //     continue;
+                        // }
+                    }
+                }
+
                 c.DeSpawn();
                 if (!c.Destroyed)
                     c.Destroy(DestroyMode.Vanish);

@@ -33,4 +33,6 @@ Unity framework and bulk game assets are not included.</MMTip>
 	<MsgModMetaDataCleaned>{0} ModMetaData removed and {1} cleaned.</MsgModMetaDataCleaned>
 	<MsgLanguageDataCleaned>{0} Unused languages removed and {1} translation injections cleaned.</MsgLanguageDataCleaned>
 	<MsgDefPackageCleaned>{0} DefPackages removed.</MsgDefPackageCleaned>
+	<SettingsExcludeAnomalyCorpsesLabel>Exclude Anomaly Corpses</SettingsExcludeAnomalyCorpsesLabel>
+	<SettingsExcludeAnomalyCorpsesTip>If enabled, prevents the removal of corpses identified as unnatural or related to the Anomaly DLC.</SettingsExcludeAnomalyCorpsesTip>
 </LanguageData>

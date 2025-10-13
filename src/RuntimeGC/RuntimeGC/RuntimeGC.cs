@@ -4,20 +4,38 @@ using UnityEngine;
 
 namespace RuntimeGC
 {
+    /// <summary>
+    /// Main class for the RuntimeGC mod.
+    /// </summary>
     public class RuntimeGC:Mod
     {
+        /// <summary>
+        /// Static instance of the mod's settings.
+        /// </summary>
         public static RuntimeGCSettings Settings;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RuntimeGC"/> class.
+        /// </summary>
+        /// <param name="content">The mod content pack.</param>
         public RuntimeGC(ModContentPack content) : base(content)
 {
 	RuntimeGC.Settings = base.GetSettings<RuntimeGCSettings>();
 }
 
+        /// <summary>
+        /// Returns the settings category label for the mod.
+        /// </summary>
+        /// <returns>The settings category label.</returns>
         public override string SettingsCategory()
         {
             return "RuntimeGC";
         }
 
+        /// <summary>
+        /// Draws the settings window contents for the mod.
+        /// </summary>
+        /// <param name="inRect">The rect in which to draw the settings.</param>
         public override void DoSettingsWindowContents(Rect inRect)
         {
             GUI.BeginGroup(inRect);
@@ -159,6 +177,11 @@ namespace RuntimeGC
             rectCheck = new Rect(0, height + UIUtil.MarginVertical, width, height);
             Widgets.CheckboxLabeled(rectCheck, "SettingsArchiveGeneralLabel".Translate(), ref Settings.ArchiveMessageGeneral);
             TooltipHandler.TipRegion(rectCheck, "SettingsArchiveGeneralTip".Translate());
+            rectCheck = new Rect(0, height * 2 + UIUtil.MarginVertical * 2, width, height);
+            bool excludeAnomalyCorpsesFlag = Settings.ExcludeAnomalyCorpses;
+            Widgets.CheckboxLabeled(rectCheck, "SettingsExcludeAnomalyCorpsesLabel".Translate(), ref excludeAnomalyCorpsesFlag);
+            Settings.ExcludeAnomalyCorpses = excludeAnomalyCorpsesFlag;
+            TooltipHandler.TipRegion(rectCheck, "SettingsExcludeAnomalyCorpsesTip".Translate());
             GUI.EndGroup();
 
 

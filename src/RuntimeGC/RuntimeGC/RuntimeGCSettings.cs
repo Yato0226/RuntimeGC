@@ -3,6 +3,9 @@ using Verse;
 
 namespace RuntimeGC
 {
+    /// <summary>
+    /// Represents the settings for the RuntimeGC mod.
+    /// </summary>
     public class RuntimeGCSettings:ModSettings
     {
         private bool EnableMemoryUsageBar;
@@ -11,18 +14,55 @@ namespace RuntimeGC
         private int MemoryUsageUpdateInterval;
         private bool EnableMemoryUsageTip;
 
+        /// <summary>
+        /// Whether to automatically clean mod metadata.
+        /// </summary>
         public bool AutoCleanModMetaData;
+        /// <summary>
+        /// Whether to automatically clean language data.
+        /// </summary>
         public bool AutoCleanLanguageData;
+        /// <summary>
+        /// Whether to automatically clean def packages.
+        /// </summary>
         public bool AutoCleanDefPackage;
 
+        /// <summary>
+        /// Whether to mute WorldPawnGC.
+        /// </summary>
         public bool DoMuteGC;
+        /// <summary>
+        /// Whether to mute BattleLog.
+        /// </summary>
         public bool DoMuteBL;
 
+        /// <summary>
+        /// Whether to archive GC dialogs.
+        /// </summary>
         public bool ArchiveGCDialog;
+        /// <summary>
+        /// Whether to archive general messages.
+        /// </summary>
         public bool ArchiveMessageGeneral;
 
+        /// <summary>
+        /// Whether to display memory usage on screen for developers.
+        /// </summary>
         public bool DevOnScreenMemoryUsage;
 
+        private bool excludeAnomalyCorpses;
+        /// <summary>
+        /// Gets or sets a value indicating whether to exclude unnatural or anomaly DLC corpses from cleaning.
+        /// </summary>
+        public bool ExcludeAnomalyCorpses
+        {
+            get => excludeAnomalyCorpses;
+            set => excludeAnomalyCorpses = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the memory monitor bar is enabled.
+        /// </summary>
         public bool EnableMemoryMonitorBar
         {
             get
@@ -38,6 +78,9 @@ namespace RuntimeGC
                 }
             }
         }
+        /// <summary>
+        /// Gets or sets the lower bound in MB for the memory monitor bar.
+        /// </summary>
         public int MemoryMonitorBarLowerBoundMb
         {
             get
@@ -53,6 +96,9 @@ namespace RuntimeGC
                 }
             }
         }
+        /// <summary>
+        /// Gets or sets the upper bound in MB for the memory monitor bar.
+        /// </summary>
         public int MemoryMonitorBarUpperBoundMb
         {
             get
@@ -68,6 +114,9 @@ namespace RuntimeGC
                 }
             }
         }
+        /// <summary>
+        /// Gets or sets the update interval for the memory monitor.
+        /// </summary>
         public int MemoryMonitorUpdateInterval
         {
             get
@@ -83,6 +132,9 @@ namespace RuntimeGC
                 }
             }
         }
+        /// <summary>
+        /// Gets or sets a value indicating whether the memory monitor tip is enabled.
+        /// </summary>
         public bool EnableMemoryMonitorTip
         {
             get
@@ -101,7 +153,10 @@ namespace RuntimeGC
 
         internal int restartFlags = 0;
 
-        public Mod Mod
+        /// <summary>
+        /// Gets the current mod instance.
+        /// </summary>
+        public new Mod Mod
         {
             get
             {
@@ -110,12 +165,18 @@ namespace RuntimeGC
             }
             set { }
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RuntimeGCSettings"/> class.
+        /// </summary>
         public RuntimeGCSettings()
         {
             this.Init();
             this.UpdateCache();
         }
 
+        /// <summary>
+        /// Initializes the settings to their default values.
+        /// </summary>
         public void Init()
         {
             this.InitMemoryMonitor();
@@ -131,8 +192,12 @@ namespace RuntimeGC
             this.ArchiveMessageGeneral = false;
 
             this.DevOnScreenMemoryUsage = false;
+            this.ExcludeAnomalyCorpses = false;
         }
 
+        /// <summary>
+        /// Initializes memory monitor related settings to their default values.
+        /// </summary>
         public void InitMemoryMonitor()
         {
             this.EnableMemoryUsageBar = true;
@@ -142,6 +207,9 @@ namespace RuntimeGC
             this.EnableMemoryUsageTip = true;
         }
 
+        /// <summary>
+        /// Resets all settings to their default values.
+        /// </summary>
         public void ResetToDefault()
         {
             if (this.AutoCleanModMetaData != true)
@@ -161,11 +229,17 @@ namespace RuntimeGC
             UIUtil.Notify_MMBtnLabelChanged();
         }
 
+        /// <summary>
+        /// Updates the cached settings in MainButtonWorker_RuntimeGC.
+        /// </summary>
         public void UpdateCache()
         {
             MainButtonWorker_RuntimeGC.UpdateSettings(this);
         }
 
+        /// <summary>
+        /// Exposes the settings data for saving and loading.
+        /// </summary>
         public override void ExposeData()
         {
             Scribe_Values.Look<bool>(ref EnableMemoryUsageBar, "EnableMemoryUsageBar", true);
@@ -185,6 +259,7 @@ namespace RuntimeGC
             Scribe_Values.Look<bool>(ref ArchiveMessageGeneral, "ArchiveMessageGeneral", false);
 
             Scribe_Values.Look<bool>(ref DevOnScreenMemoryUsage, "DevOnScreenMemoryUsage", false);
+            Scribe_Values.Look<bool>(ref excludeAnomalyCorpses, "ExcludeAnomalyCorpses", false);
             
             if(Scribe.mode== LoadSaveMode.LoadingVars)
             {
@@ -201,6 +276,10 @@ namespace RuntimeGC
             }
         }
 
+        /// <summary>
+        /// Checks if a restart is required due to changed settings.
+        /// </summary>
+        /// <returns>True if a restart is required, false otherwise.</returns>
         public bool RequiresRestart()
         {
             return this.restartFlags != 0;

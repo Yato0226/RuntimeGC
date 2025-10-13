@@ -20,6 +20,9 @@ namespace RuntimeGC
         Debug_frozen=2147483647
     }
 
+    /// <summary>
+    /// Main button worker for RuntimeGC, handling UI and memory monitoring.
+    /// </summary>
     public class MainButtonWorker_RuntimeGC:MainButtonWorker_ToggleTab
     {
         private static bool enableBar;
@@ -27,7 +30,13 @@ namespace RuntimeGC
         private static int memoryBarStepMb;
         private static bool enableTip;
         
+        /// <summary>
+        /// The interval at which the memory monitor updates.
+        /// </summary>
         public static int updateInterval = (int)MemoryMonitorUpdateMode.Moderate;
+        /// <summary>
+        /// Whether to display memory usage on screen (developer mode only).
+        /// </summary>
         public static bool onScreenMemUsage = false;
 
         internal static string TabDescriptionTranslated;
@@ -57,6 +66,10 @@ namespace RuntimeGC
             updatetick = 32767;
         }
 
+        /// <summary>
+        /// Handles the drawing and interaction of the main button.
+        /// </summary>
+        /// <param name="rect">The rectangle defining the button's area.</param>
         public override void DoButton(Rect rect)
         {
             Text.Font = GameFont.Small;

@@ -6,12 +6,18 @@ using RimWorld;
 
 namespace RuntimeGC
 {
+    /// <summary>
+    /// Represents the main user interface window for RuntimeGC.
+    /// </summary>
     public class UserInterface : MainTabWindow
     {
         private int pawnsAliveCount;
         private int pawnsDeadCount;
         private bool pawnsCountDirty = true;
 
+        /// <summary>
+        /// Gets the requested size of the tab.
+        /// </summary>
         public override Vector2 RequestedTabSize
         {
             get
@@ -20,6 +26,9 @@ namespace RuntimeGC
             }
         }
 
+        /// <summary>
+        /// Gets the count of all alive world pawns.
+        /// </summary>
         public int PawnsAliveCount
         {
             get
@@ -34,6 +43,9 @@ namespace RuntimeGC
             }
         }
 
+        /// <summary>
+        /// Gets the count of all dead world pawns.
+        /// </summary>
         public int PawnsDeadCount
         {
             get
@@ -48,6 +60,10 @@ namespace RuntimeGC
             }
         }
 
+        /// <summary>
+        /// Draws the contents of the main window.
+        /// </summary>
+        /// <param name="canvas">The rectangle defining the window's area.</param>
         public override void DoWindowContents(Rect canvas)
         {
             UnityEngine.GUI.BeginGroup(canvas);
@@ -74,6 +90,10 @@ namespace RuntimeGC
             UnityEngine.GUI.EndGroup();
         }
 
+        /// <summary>
+        /// Draws the interactive components of the user interface.
+        /// </summary>
+        /// <param name="rect">The rectangle defining the area for components.</param>
         public void DoComponents(Rect rect)
         {
             UnityEngine.GUI.BeginGroup(rect);
@@ -113,6 +133,10 @@ namespace RuntimeGC
             UnityEngine.GUI.EndGroup();
         }
 
+        /// <summary>
+        /// Draws the help content section of the user interface.
+        /// </summary>
+        /// <param name="rect">The rectangle defining the area for help contents.</param>
         public void DoHelpContents(Rect rect)
         {
             UnityEngine.GUI.BeginGroup(rect);
@@ -154,6 +178,10 @@ namespace RuntimeGC
             UnityEngine.GUI.EndGroup();
         }
 
+        /// <summary>
+        /// Performs a garbage collection operation and displays a summary.
+        /// </summary>
+        /// <param name="verbose">If set to <c>true</c>, provides verbose output.</param>
         public void GC_wrapped(bool verbose=false)
         {
             int a = PawnsAliveCount;
@@ -174,11 +202,17 @@ namespace RuntimeGC
                 Find.Archive.Add(new ArchivedDialog(str, "DlgArchiveTitle".Translate(), null));
         }
 
+        /// <summary>
+        /// Notifies the UI that the pawns count is dirty and needs to be re-calculated.
+        /// </summary>
         public void Notify_PawnsCountDirty()
         {
             this.pawnsCountDirty = true;
         }
 
+        /// <summary>
+        /// Called before the window is opened. Initializes state.
+        /// </summary>
         public override void PreOpen()
         {
             base.PreOpen();

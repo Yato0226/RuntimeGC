@@ -9,20 +9,38 @@ using System;
 
 namespace Toolbox
 {
+    /// <summary>
+    /// Provides utility methods for various tasks.
+    /// </summary>
     internal class Toolbox
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether something has been cleaned.
+        /// </summary>
         public static bool Cleaned { get; internal set; }
 
+        /// <summary>
+        /// Cleans mod metadata. (Not yet implemented)
+        /// </summary>
         internal static void CleanModMetaData()
         {
             throw new NotImplementedException();
         }
     }
+    /// <summary>
+    /// Provides methods for cleaning up mod metadata.
+    /// </summary>
     public static class ModMetaDataCleaner
     {
         private static int cacheMetaDataCount = -1;
+        /// <summary>
+        /// Gets a value indicating whether mod metadata has been cleaned.
+        /// </summary>
         public static bool Cleaned => cacheMetaDataCount >= ModLister.AllInstalledMods.Count();
 
+        /// <summary>
+        /// Cleans up inactive mod metadata and associated preview images.
+        /// </summary>
         public static void CleanModMetaData()
         {
             FieldInfo field = typeof(ModLister).GetField("mods", BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
@@ -71,11 +89,20 @@ namespace Toolbox
         }
     }
 
+    /// <summary>
+    /// Provides methods for cleaning up language data.
+    /// </summary>
     public static class LanguageDataCleaner
     {
         private static int cacheLanguageDataCount = -1;
+        /// <summary>
+        /// Gets a value indicating whether language data has been cleaned.
+        /// </summary>
         public static bool Cleaned => cacheLanguageDataCount >= LanguageDatabase.AllLoadedLanguages.Count();
 
+        /// <summary>
+        /// Cleans up unused language data and def injection packages.
+        /// </summary>
         public static void CleanLanguageData()
         {
             FieldInfo languages = typeof(LanguageDatabase).GetField("languages", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
@@ -103,11 +130,20 @@ namespace Toolbox
         }
     }
 
+    /// <summary>
+    /// Provides methods for cleaning up def packages.
+    /// </summary>
     public static class DefPackageCleaner
     {
         private static ModContentPack coreMod = null;
+        /// <summary>
+        /// Gets a value indicating whether def packages have been cleaned.
+        /// </summary>
         public static bool Cleaned => coreMod != null && coreMod.AllDefs.Count() == 0;
 
+        /// <summary>
+        /// Cleans up def packages from all running mods.
+        /// </summary>
         public static void CleanDefPackage()
         {
             FieldInfo defPackages = typeof(ModContentPack).GetField("defPackages", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
@@ -126,8 +162,17 @@ namespace Toolbox
         }
     }
 
+    /// <summary>
+    /// Provides methods to launch cleaning operations.
+    /// </summary>
     public static class Launcher
     {
+        /// <summary>
+        /// Queues long events to clean mod metadata, language data, and def packages.
+        /// </summary>
+        /// <param name="modMetaData">Whether to clean mod metadata.</param>
+        /// <param name="languageData">Whether to clean language data.</param>
+        /// <param name="defPackage">Whether to clean def packages.</param>
         public static void Launch(bool modMetaData,bool languageData,bool defPackage)
         {
             if (modMetaData)

@@ -7,9 +7,12 @@ using RimWorld.Planet;
 
 namespace RuntimeGC
 {
+    /// <summary>
+    /// Cleans up world pawns to reduce save file size and improve performance.
+    /// </summary>
     public class WorldPawnCleaner
     {
-        static string CopyrightStr = "RuntimeGC for 1.5,user19990313,Baidu Tieba&Ludeon forum";	
+        //static string CopyrightStr = "RuntimeGC for 1.5,user19990313,Baidu Tieba&Ludeon forum";
 
         ///Verbosity
         private Dictionary<Pawn, int> allPawnsCounter = new Dictionary<Pawn, int>();
@@ -18,6 +21,9 @@ namespace RuntimeGC
         ///Debug only.Well,useless.
         private bool debug = false;
 
+        /// <summary>
+        /// Defines various flags used to categorize world pawns during garbage collection.
+        /// </summary>
         enum Flags
         {
             Colonist = 1,
@@ -412,6 +418,9 @@ namespace RuntimeGC
             mapPawnEntryPoints = pawnlist.ToList<Pawn>();
         }
 
+        /// <summary>
+        /// Disposes temporary data structures to free up memory for system garbage collection.
+        /// </summary>
         public void DisposeTmpForSystemGC()
         {
             this.reference = null;
